@@ -14,6 +14,7 @@ namespace Server.BLL
     {
         private DataAccessLayer DAL = new DataAccessLayer();
         ProcessMember ProcessMember = new ProcessMember();
+        private double sum;
         public int insertBill(Bill bill)
         {
             string query = "insert into Bill values('" + bill.UserID.ToString() + "','" + bill.MemberID.ToString() + "','" + bill.CreatedAt.ToString() + "','" + bill.TotalPrice.ToString() + "','WAITING');" +
@@ -103,6 +104,53 @@ namespace Server.BLL
             }
             string query = "delete from Bill where MemberID = '" + memberId + "'";
             if (DAL.runQuery(query)) { }
+        }
+
+        public DataTable getAllBillbyWeek()
+        {
+            string strquery = "SELECT * FROM Bill " +
+                              "WHERE Status = 'SUCCESS' " +
+                              "AND CreatedAt >= DATEADD(DAY, -((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày đầu tuần (Thứ Hai) " +
+                              "AND CreatedAt < DATEADD(DAY, 7 - ((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày cuối tuần (Chủ Nhật)";
+            return DAL.getDataTable(strquery);
+        }
+
+        public DataTable getAllBillbyMonth()
+        {
+            string strquery = "SELECT * FROM Bill " +
+                              "WHERE Status = 'SUCCESS' " +
+                              "AND YEAR(CreatedAt) = YEAR(GETDATE())  -- Năm hiện tại " +
+                              "AND MONTH(CreatedAt) = MONTH(GETDATE())  -- Tháng hiện tại";
+            return DAL.getDataTable(strquery);
+        }
+        public double getTotalPricebyWeek()
+        {
+            sum = 0;
+            string strquery = "SELECT TotalPrice FROM Bill " +
+                              "WHERE Status = 'SUCCESS' " +
+                              "AND CreatedAt >= DATEADD(DAY, -((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày đầu tuần (Thứ Hai) " +
+                              "AND CreatedAt < DATEADD(DAY, 7 - ((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày cuối tuần (Chủ Nhật)";
+            DataTable dt = DAL.getDataTable(strquery);
+            foreach (DataRow row in dt.Rows)
+            {
+                sum += Convert.ToInt32(row["TotalPrice"]);
+            }
+            return sum;
+        }
+
+        public double getTotalPricebyMonth()
+        {
+            sum = 0;
+            string strquery = "SELECT TotalPrice FROM Bill " +
+                              "WHERE Status = 'SUCCESS' " +
+                              "AND YEAR(CreatedAt) = YEAR(GETDATE())  -- Năm hiện tại " +
+                              "AND MONTH(CreatedAt) = MONTH(GETDATE())  -- Tháng hiện tại";
+            DataTable dt = DAL.getDataTable(strquery);
+            foreach (DataRow row in dt.Rows)
+            {
+                sum += Convert.ToInt32(row["TotalPrice"]);
+            }
+            return sum;
         }
     }
 }

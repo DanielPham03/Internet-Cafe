@@ -107,13 +107,21 @@ namespace Server.GUI
                 
             }
             if (addMoney)
-            { 
-                addMoney = false;
-                if (ProcessMember.addMoney(double.Parse(nudMoney.Text), txtUserName.Text)){
-                    getAddMoneyTransac();
-                    ProcessAddMoney.insertAddMoneyWithoutClient(addMoneyTransaction);
-                    ServerManager.addMoney = double.Parse(nudMoney.Text);
-                    ServerManager.memberName = txtUserName.Text;
+            {
+                if (long.Parse(nudMoney.Text) % 10000 == 0)
+                {
+                    addMoney = false;
+                    if (ProcessMember.addMoney(double.Parse(nudMoney.Text), txtUserName.Text))
+                    {
+                        getAddMoneyTransac();
+                        ProcessAddMoney.insertAddMoneyWithoutClient(addMoneyTransaction);
+                        ServerManager.addMoney = double.Parse(nudMoney.Text);
+                        ServerManager.memberName = txtUserName.Text;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Số tiền nạp phải chia hết cho 10000", "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             if (updateMember)

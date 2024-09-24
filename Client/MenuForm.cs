@@ -32,9 +32,7 @@ namespace Client
             products = clientManager.productList;
             listCategory = clientManager.categoryList;
             cbCategory.DataSource = clientManager.categoryList;
-            timer1.Enabled = true;
-            timer1.Interval = 1000;
-            timer1.Start();
+            
         }
         public void loadAllDataProduct()
         {
@@ -61,6 +59,9 @@ namespace Client
         }
         private void MenuForm_Load(object sender, EventArgs e)
         {
+            timer1.Enabled = true;
+            timer1.Interval = 1000;
+            timer1.Start();
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width - clientForm.Width, 0);
         }
@@ -82,27 +83,30 @@ namespace Client
         private void loadCart()
         {
             pnlCart.Controls.Clear();
-            foreach(Cart cart in listCart)
+            pnlCart.BringToFront();
+            foreach (Cart cart in listCart)
             {
                 CartItem item = new CartItem();
                 item.Cart = cart;
                 pnlCart.Controls.Add(item);
+                
             }
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (checkClick == 1)
             {
+                addControl();
                 checkClick = -1;
-                loadCart();
             }
         }
-
-        private void pnlCart_Paint(object sender, PaintEventArgs e)
+        private void addControl()
         {
-
+            Cart cart = listCart[listCart.Count - 1];
+            CartItem cartItem = new CartItem();
+            cartItem.Cart = cart;
+            pnlCart.Controls.Add((cartItem));
         }
-
         private void btnOrder_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -130,6 +134,14 @@ namespace Client
                 str += "|" + cart.Product.ProductID.ToString() + "|" + cart.Quantity.ToString();
             }
             return str;
+        }
+
+        private void pnlCart_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void pnlCart_ControlAdded(object sender, ControlEventArgs e)
+        {
         }
     }
 }

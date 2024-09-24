@@ -51,12 +51,14 @@ namespace Client
             
         }
 
+       
         private void btnAddMoney_Click(object sender, EventArgs e)
         {
-            
-            
-                if(btnAddMoney.Text == "Hoàn thành" || btnAddMoney.Text == "Không thành công")
+            if (long.Parse(txtMoney.Text) % 10000 == 0)
+            {
+                if (btnAddMoney.Text == "Hoàn thành" || btnAddMoney.Text == "Không thành công")
                 {
+                    ClientForm.check = -1;
                     this.Close();
                 }
                 else
@@ -68,34 +70,28 @@ namespace Client
                     ptbWaiting.Visible = true;
                     txtMoney.Enabled = false;
                 }
-            
+            }
+            else
+            {
+                MessageBox.Show("Số tiền nạp phải chia hết cho 10000", "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             if(ClientManager.message == "Add money success")
             {
-                ClientManager.message = "";
                 ptbWaiting.Visible=false;
                 ptbDone.Visible = true;
-                try
-                {
-                    btnAddMoney.Text = "Hoàn thành";
-                    btnAddMoney.ForeColor = Color.White;
-                    btnAddMoney.Enabled = true;
-                    btnClose.Visible = false;
-                    ClientManager.serviceFee += double.Parse(txtMoney.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-               
-                
+                btnAddMoney.Text = "Hoàn thành";
+                btnAddMoney.ForeColor = Color.White;
+                btnAddMoney.Enabled = true;
+                btnClose.Visible = false;
+                ClientManager.message = "";
+                ClientManager.serviceFee += double.Parse(txtMoney.Text);
             }
             if (ClientManager.message == "Add money denied")
             {
-                ClientManager.message = "";
                 ptbWaiting.Visible=false;
                 ptbDeny.Visible = true;
                 btnAddMoney.Text = "Không thành công";
@@ -103,6 +99,7 @@ namespace Client
                 btnAddMoney.BackColor = Color.OrangeRed;
                 btnAddMoney.Enabled = true;
                 btnClose.Visible = false;
+                ClientManager.message = "";
             }
         }
     }

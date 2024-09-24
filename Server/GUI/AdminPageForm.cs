@@ -32,19 +32,14 @@ namespace Server
             this.serverManager = serverManager;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void AdminMainForm_Load(object sender, EventArgs e)
         {
             
+            dashBoardControl1.BringToFront();
+            pnlMainPage.BackColor = blackGreenColor;
+            lblMainPage.BackColor = blackGreenColor;
+            ptbMainPage.BackColor = blackGreenColor;
         }
 
         private void controlContainer_Paint(object sender, PaintEventArgs e)
@@ -80,7 +75,6 @@ namespace Server
         }
 
         
-        
         private void lblMember_Click(object sender, EventArgs e)
         {
             resetColor ();
@@ -90,28 +84,25 @@ namespace Server
             ptbMember.BackColor = blackGreenColor;
         }
 
-        
         private void resetColor()
         {
+            ptbClient.BackColor = Color.Transparent;
+            ptbMember.BackColor = Color.Transparent;
+            ptbMainPage.BackColor = Color.Transparent;
+            ptbMenu.BackColor = Color.Transparent;
+            ptbUserCtr.BackColor = Color.Transparent;
+            pnlClient.BackColor = Color.Transparent;
+            pnlMainPage.BackColor = Color.Transparent;
             pnlMember.BackColor = Color.Transparent;
+            pnlMenu.BackColor = Color.Transparent;
             pnlUserCtr.BackColor = Color.Transparent;
+            lblClientPage.BackColor = Color.Transparent;
             lblMember.BackColor = Color.Transparent;
             lblUserCtr.BackColor = Color.Transparent;
-
-            ptbUserCtr.BackColor = Color.Transparent;
-            ptbMember.BackColor = Color.Transparent;
-
+            lblMenu.BackColor = Color.Transparent;
+            lblMainPage.BackColor = Color.Transparent;
         }
 
-        private void dashBoardControl1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dashBoardControl1_Load_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void lblPayment_Click(object sender, EventArgs e)
         {
@@ -120,6 +111,33 @@ namespace Server
             pnlUserCtr.BackColor = blackGreenColor;
             lblUserCtr.BackColor = blackGreenColor;
             ptbUserCtr.BackColor = blackGreenColor;
+        }
+
+        private void lblMainPage_Click(object sender, EventArgs e)
+        {
+            resetColor();
+            dashBoardControl1.BringToFront();
+            pnlMainPage.BackColor = blackGreenColor;
+            lblMainPage.BackColor = blackGreenColor;
+            ptbMainPage.BackColor = blackGreenColor;
+        }
+
+        private void lblClientPage_Click(object sender, EventArgs e)
+        {
+            resetColor();
+            clientAdminControl1.BringToFront();
+            pnlClient.BackColor = blackGreenColor;
+            lblClientPage.BackColor = blackGreenColor;
+            ptbClient.BackColor = blackGreenColor;
+        }
+
+        private void lblMenu_Click(object sender, EventArgs e)
+        {
+            resetColor();
+            menuControl1.BringToFront();
+            pnlMenu.BackColor = blackGreenColor;
+            lblMenu.BackColor = blackGreenColor;
+            ptbMenu.BackColor = blackGreenColor;
         }
     }
 }

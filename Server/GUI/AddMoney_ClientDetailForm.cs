@@ -36,6 +36,10 @@ namespace Server.GUI
             {
                 MessageBox.Show("Vui lòng nhập số tiền cần nạp.", "Thông báo", MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
+            else if (long.Parse(txtMoney.Text) % 10000 != 0)
+            {
+                MessageBox.Show("Số tiền nạp phải chia hết cho 10000", "Thông báo!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
                 ServerManager.addMoney = double.Parse(txtMoney.Text);

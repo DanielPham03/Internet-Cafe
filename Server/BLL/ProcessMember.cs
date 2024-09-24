@@ -136,10 +136,15 @@ namespace Server.BLL
         }
         public int getMemberID(string memberName)
         {
+            int id = -1;
             string query = "select * from Member where AccountName = '" + memberName + "'";
             DataTable dt = DAL.getDataTable(query);
-            DataRow row = dt.Rows[0];
-            return row.Field<int>("MemberID");
+            if(dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                return row.Field<int>("MemberID");
+            }
+            return id;
         }
 
         public string getMemberName(int id) 

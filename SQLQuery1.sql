@@ -167,3 +167,15 @@ insert into Product values (N'Sting đỏ', N'Nước Ngọt',20000,20,'https://
 insert into Product values (N'Sting vàng', N'Nước Ngọt',20000,20,'https://res.cloudinary.com/dale7wvyi/image/upload/v1726141302/izwfivsbe8rncrmcdglg.jpg')
 insert into Product values (N'Bò húc', N'Nước Ngọt',15000,20,'https://res.cloudinary.com/dale7wvyi/image/upload/v1726141302/wsoozm11e7nsrd8jkzn9.jpg')
 insert into Product values (N'Aquafina', N'Nước suối',10000,20,'https://res.cloudinary.com/dale7wvyi/image/upload/v1726141302/bpl5aniijvddgsrg33ug.jpg')
+--nạp tiền 
+insert into AddMoneyTransaction values('127.0.0.1', 'admin', 'xyz', '2024-09-15 13:40:57',30000,'SUCCESS')
+insert into AddMoneyTransaction values('127.0.0.1', 'user1', 'seraphim', '2024-09-15 13:40:57',30000,'DENIED')
+insert into AddMoneyTransaction values('127.0.0.1', 'Admin', 'Seraphim', '2024-09-23 15:37:22',20000,'SUCCESS')
+insert into AddMoneyTransaction values('127.0.0.1', 'Admin', 'Seraphim', '2024-09-23 15:38:23',30000,'SUCCESS')
+insert into AddMoneyTransaction values('127.0.0.1', 'Admin', 'Seraphim', '2024-09-23 15:44:17',10000,'SUCCESS')
+--hóa đơn mua hàng
+insert into Bill values(1,1,'2024-09-15 13:40:57',30000,'SUCCESS')
+insert into Bill values(2,2,'2024-09-15 13:40:57',50000,'DENIED')
+insert into Bill values(1,1,'2024-09-23 15:49:54',35000,'SUCCESS')
+insert into Bill values(1,1,'2024-09-23 15:51:54',50000,'SUCCESS')
+insert into Bill values(1,1,'2024-09-13 15:49:54',35000,'SUCCESS')

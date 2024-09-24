@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblClose = new System.Windows.Forms.Label();
@@ -42,7 +43,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.pnlCart = new System.Windows.Forms.FlowLayoutPanel();
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -112,7 +113,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(21, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 20);
+            this.label2.Size = new System.Drawing.Size(102, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "Phân loại";
             // 
@@ -122,7 +123,7 @@
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(110, 34);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(134, 28);
+            this.cbCategory.Size = new System.Drawing.Size(134, 33);
             this.cbCategory.TabIndex = 0;
             this.cbCategory.SelectedIndexChanged += new System.EventHandler(this.cbCategory_SelectedIndexChanged);
             // 
@@ -188,11 +189,12 @@
             this.pnlCart.AutoScroll = true;
             this.pnlCart.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.pnlCart.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.pnlCart.Location = new System.Drawing.Point(4, 63);
+            this.pnlCart.Location = new System.Drawing.Point(4, 61);
             this.pnlCart.Name = "pnlCart";
             this.pnlCart.Size = new System.Drawing.Size(383, 335);
             this.pnlCart.TabIndex = 0;
             this.pnlCart.WrapContents = false;
+            this.pnlCart.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.pnlCart_ControlAdded);
             this.pnlCart.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCart_Paint);
             // 
             // timer1

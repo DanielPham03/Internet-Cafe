@@ -13,6 +13,7 @@ namespace Server.BLL
     public class ProcessAddMoney
     {
         DataAccessLayer DAL = new DataAccessLayer();
+        private double sum;
         public bool insertAddMoney(AddMoneyTransaction x)
         {
             string query = "insert into AddMoneyTransaction values('" + x.ClientIP + "', '" + x.UserName + "', '" + x.MemberName + "','" + x.TransacDate + "', " + x.AddMoney + ",'"+x.Status+"')";
@@ -64,6 +65,55 @@ namespace Server.BLL
         {
             string query = "delete from AddMoneyTransaction where MemberName = '" + memberName + "'";
             if (DAL.runQuery(query)) { }
+        }
+
+        public DataTable getAllTransactionbyWeek()
+        {
+
+            string strquery = "SELECT * FROM AddMoneyTransaction " +
+                              "WHERE TransacStatus = 'SUCCESS' " +
+                              "AND TransacDate >= DATEADD(DAY, -((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày đầu tuần (Thứ Hai) " +
+                              "AND TransacDate < DATEADD(DAY, 7 - ((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày cuối tuần (Chủ Nhật)";
+            return DAL.getDataTable(strquery);
+        }
+
+        public DataTable getAllTransactionbyMonth()
+        {
+            string strquery = "SELECT * FROM AddMoneyTransaction " +
+                              "WHERE TransacStatus = 'SUCCESS' " +
+                              "AND YEAR(TransacDate) = YEAR(GETDATE())  -- Năm hiện tại " +
+                              "AND MONTH(TransacDate) = MONTH(GETDATE())  -- Tháng hiện tại";
+            return DAL.getDataTable(strquery);
+        }
+
+        public double getAllAddMoneybyWeek()
+        {
+            sum = 0;
+            string strquery = "SELECT AddMoney FROM AddMoneyTransaction " +
+                              "WHERE TransacStatus = 'SUCCESS' " +
+                              "AND TransacDate >= DATEADD(DAY, -((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày đầu tuần (Thứ Hai) " +
+                              "AND TransacDate < DATEADD(DAY, 7 - ((DATEPART(WEEKDAY, GETDATE()) + @@DATEFIRST - 2) % 7), CAST(GETDATE() AS DATE)) -- Ngày cuối tuần (Chủ Nhật)";
+            DataTable dt = DAL.getDataTable(strquery);
+            foreach (DataRow row in dt.Rows)
+            {
+                sum += Convert.ToInt32(row["AddMoney"]);
+            }
+            return sum;
+        }
+
+        public double getAllAddMoneybyMonth()
+        {
+            sum = 0;
+            string strquery = "SELECT AddMoney FROM AddMoneyTransaction " +
+                              "WHERE TransacStatus = 'SUCCESS' " +
+                              "AND YEAR(TransacDate) = YEAR(GETDATE())  -- Năm hiện tại " +
+                              "AND MONTH(TransacDate) = MONTH(GETDATE())  -- Tháng hiện tại";
+            DataTable dt = DAL.getDataTable(strquery);
+            foreach (DataRow row in dt.Rows)
+            {
+                sum += Convert.ToInt32(row["AddMoney"]);
+            }
+            return sum;
         }
     }
 }
